@@ -1,0 +1,152 @@
+//Colors
+
+@darkgrey: #292929;
+@lightgrey: #f8f5f2;
+
+//Viewports
+
+@tablet-width: 768px;
+@desktop-width: 1200px;
+@mobile-width-only: 767px;
+
+.site-list {
+    font-weight: bold;
+
+    @media (min-width: @tablet-width) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      min-width: 570px;     
+    }
+   
+    @media (min-width: @desktop-width) {
+      width: 780px;
+    }
+}
+
+.site-list__item {
+    @media (min-width: @tablet-width) {
+        margin-right: 32px;
+   
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &--active {
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #826550;
+        }
+    }
+  }
+}
+
+.site-list__item a[href] {
+    @media (min-width: @tablet-width) {
+        &:hover {
+            color: #826550;
+
+            background-color: #000000;
+        }
+
+        &:active {
+            color: #ffffff;
+
+            background-color: #000000;
+            opacity: 0.3;
+        }
+    }
+
+    @media (min-width: @desktop-width) {
+        &:hover {
+            color: #000000;
+
+            background-color: #ffffff;
+        }
+
+        &:active{
+            color: rgba(0, 0, 0, 0.3);
+
+            background-color: #ffffff;
+            opacity: 1;
+        }
+    }
+}
+
+.site-list a {
+    position: relative;
+    display: block;
+    padding: 12px 21px;
+    padding-bottom: 13px;
+    font-size: 18px;
+    line-height: 24px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: #826550;
+    border-top: 1px solid #886e5d;
+    border-bottom: 1px solid #71543f;
+
+    @media (min-width: @tablet-width) {
+        padding: 0;
+        padding-top: 25px;
+        padding-bottom: 23px;
+        background: none;
+        border: none;
+        font-size: 15px;
+    }
+
+    @media (min-width: @desktop-width) {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+}
+
+.site-list__icon-comb {
+    position: absolute;
+    top: 15px;
+    left: auto;
+    right: 15px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.3;
+    fill: #ffffff;
+
+    @media (min-width: @tablet-width) {
+        top: 8px;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        .site-list a[href] & {
+            opacity: 1;
+            fill: #826550;
+        }
+
+        .site-list a[href]:active & {
+            opacity: 0.9;
+            fill: #ffffff;
+        }
+    }  
+    
+    @media (min-width: @desktop-width) {
+        top: 28px;
+        margin: 0;
+
+        .site-list a[href]:hover & {
+            opacity: 0.3;
+            fill: #000000;
+        }
+
+        .site-list a[href]:active & {
+            opacity: 0.1;
+        }
+    } 
+}

@@ -1,0 +1,61 @@
+//Colors
+
+@darkgrey: #292929;
+@lightgrey: #f8f5f2;
+
+//Viewports
+
+@tablet-width: 768px;
+@desktop-width: 1200px;
+@mobile-width-only: 767px;
+
+
+
+.page-header {
+    display: flex;
+    flex-direction: column;
+    background-color: #242424;
+    color: #ffffff;
+
+    @media (min-width: @tablet-width) {
+        background-color: #000000;
+        
+    }
+}
+
+.page-header__logo {
+    height: 85px;
+    text-align: center;
+
+    @media (min-width: @tablet-width) {
+        height: 400px;
+        order: 2;
+        background-color: #000000;
+        background-image: url("../img/back-tablet.png");
+        background-repeat: no-repeat;
+        background-position: center -9px;
+
+        @media (min-resolution: 2dppx) {
+            background-image: url("../img/back-tabletX2.png");
+            background-size: 1338px auto;
+        }
+        
+    }
+
+    @media (min-width: @desktop-width) {
+        height: 648px;
+        background-position: center 0;
+        background-size: cover;
+        background-image: url("../img/back-desktop.png");
+    }
+}
+
+.page-header__logo img {
+    width: 226px;
+    height: auto;
+    margin-top: 30px;
+
+    @media (min-width: @desktop-width) {
+        margin-top: 57px;
+    }
+}

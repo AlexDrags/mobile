@@ -1,0 +1,41 @@
+.logo {
+    width: 226px;
+    height: 85px;
+
+    @media (min-width: @tablet-width) {
+        display: block;
+        width: 370px;
+        height: auto;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+    
+    @media (min-width: @desktop-width) {
+        margin-top: 57px;
+        
+    }
+}
+
+.logo__barbershop {
+    display: none;
+    stroke: green;
+
+    @media (min-width: @tablet-width) {
+        display: block;
+        
+    }
+}
+
+.logo__borodinsky {
+    stroke: red;
+}
+
+.logo__moustache {
+    display: none;
+    stroke: yellow;
+
+    @media (min-width: @desktop-width) {
+        display: block;
+       
+    }
+}
