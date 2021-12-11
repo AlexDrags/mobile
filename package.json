@@ -1,25 +1,36 @@
 {
-  "dependencies": {
+  "name": "mobile",
+  "version": "1.0.0",
+  "description": "test project",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexDrags/mobile.git"
+  },
+  "keywords": [
+    "-"
+  ],
+  "author": "AlexDrags",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexDrags/mobile/issues"
+  },
+  "homepage": "https://github.com/AlexDrags/mobile#readme",
+  "devDependencies": {
     "autoprefixer": "^10.4.0",
     "browser-sync": "^2.27.7",
     "del": "^6.0.0",
+    "gulp": "^4.0.2",
     "gulp-csso": "^4.0.1",
     "gulp-imagemin": "^8.0.0",
+    "gulp-less": "^5.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.1",
     "gulp-rename": "^2.0.0",
     "gulp-sourcemaps": "^3.0.0",
-    "gulp-webp": "^4.0.1",
-    "svgstore": "^3.0.1"
-  },
-  "name": "barbershop",
-  "version": "1.0.0",
-  "description": "Тренажёрный сайт htmlacademy",
-  "main": "index.html",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "barbershop",
-  "license": "ISC"
+    "gulp-webp": "^4.0.1"
+  }
 }

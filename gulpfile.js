@@ -1,6 +1,6 @@
 const gulp = require("gulp");
 const plumber = require("gulp-plumber"); //обработчик на ошибки
-const sourcemap = require("gulp-sourcemapsnpm i gulp-sourcemaps"); //строит карты кода от итогового css к less файлу где это писалось
+const sourcemap = require("gulp-sourcemaps"); //строит карты кода от итогового css к less файлу где это писалось
 const less = require("gulp-less");
 const postcss = require("gulp-postcss"); //библиотека префиксов
 const autoprefixer = require("autoprefixer"); //добавлять префиксы
@@ -12,6 +12,17 @@ const svgstore = require("svg-store");
 const sync = require("browser-sync").create(); //поднятие локального серва 
 const build = require("gulp");
 const del = require("del");
+
+var paths = {
+    styles: {
+      src: 'source/CSS/**/*.less',
+      dest: 'build/CSS/'
+    },
+    scripts: {
+      src: 'source/scripts/**/*.js',
+      dest: 'build/scripts/'
+    }
+  }
 
 // Styles
 const styles = () => {
@@ -27,7 +38,7 @@ const styles = () => {
     .pipe(sourcemap.write("build/CSS"))
     .pipe(gulp.dest("build/CSS"))
     .pipe(sync.stream());
-};
+}
 
 const images = () => {
     return gulp.src("source/img/**/*.{jpg,png.svg}")
@@ -37,21 +48,13 @@ const images = () => {
             imagemin.svgo()
         ]))
         .pipe(gulp.dest("build/img"))
-};
-
-
-const sprite = () => {
-    .pipe(svgstore())
-    .pipe(rename("sprite.svg"))
-    .pipe(gulp.dest("build/img"))
-};
-
+}
 
 const webp = () => {
     return gulp.src("source/img/**/*.{jpg.pmg}")
         .pipe(webp({quality: 90}))
         .pipe(gulp.dest("build/img"))
-};
+}
 
 
 //Server 
@@ -66,14 +69,14 @@ const server = (done) => {
         ui: false,
     });
     done();
-};
+}
 
 
 //Watcher
 const watcher = () => {
     gulp.watch("source/styles/**/*.less", gulp.series("styles"));
     gulp.watch("source/*.html").on("change", sync.reload);
-};
+}
 
 
 const copy = () => {
@@ -85,12 +88,12 @@ const copy = () => {
         base: "source"
     })
     .pipe(gulp.dest("build"));
-};
+}
 
 
 const clean = () => {
     return del("build");
-};
+}
 
 
 const build = () => gulp.series(
@@ -99,11 +102,10 @@ const build = () => gulp.series(
     "css",
     "sprite",
     "html"
-); 
+)
 
 exports.styles = styles;
 exports.images = images;
-exports.sprite = sprite;
 exports.webp = webp;
 exports.server = server;
 exports.watcher = watcher;
