@@ -1,16 +1,23 @@
 const { src, dest, parallel, series, watch } = require('gulp');
+const plumber = require('gulp-plumber'); //обработчик на ошибки
+const sourcemaps = require('gulp-sourcemaps');
 const browser = require('browser-sync').create();
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const less = require('gulp-less');
 const postcss = require("gulp-postcss"); //библиотека префиксов
-const autoprefixer = require("autoprefixer"); //добавлять префиксы
-const csso = require("gulp-csso");
-const rename = require("gulp-rename");
+const autoprefixer = require("gulp-autoprefixer"); //добавлять префиксы
+const cleancss = require('gulp-clean-css')
+const csso = require('gulp-csso');
+const newer = require('gulp-newer');
+const del = require('del');
+const htmlmin = require('gulp-htmlmin');
+ 
+
 
 function browsersync() {
     browser.init({
-        server: { baseDir: 'source/' },
+        server: { baseDir: 'dist/' },
         notify: false,
         online: true
     })
@@ -24,28 +31,37 @@ function scripts() {
     .pipe(browser.stream())
 }
 
+function minify() {
+    return src('source/*.html')
+      .pipe(htmlmin({ collapseWhitespace: true }))
+      .pipe(dest('dist/'))
+      .pipe(browser.stream())
+  }
+
 function styles() {
-    return src(['source/styles/style.less'])
+    return src('source/styles/style.less')
+    .pipe(plumber())
+    .pipe(sourcemaps.init())  
     .pipe(less())
-    .pipe(postcss([
-        autoprefixer()
-    ]))
+    .pipe(autoprefixer({ overrideBrowserlist: ['last 10 versions'], grid: true }))
+    .pipe(cleancss(( { level:{ 1: { specialComments: 0 } } } )))
     .pipe(csso())
-    .pipe(rename('style.min.css'))
+    .pipe(concat('style.min.css'))
+    .pipe(sourcemaps.write())
     .pipe(dest('dist/CSS/'))
     .pipe(browser.stream())
 }
 
 function watcher() {
-    watch([
-        'source/**/*.js',
-        'source/*.html',
-        'source/**/*.less'
-    ],scripts, styles)
+    watch('source/**/*.js', scripts);
+    watch('source/styles/**/*.less', styles);
+    watch('source/*.html').on('change', browser.reload);
 }
 
 exports.browsersync = browsersync;
 exports.scripts = scripts;
 exports.styles = styles;
+exports.del = del;
+exports.minify = minify;
 
-exports.default = parallel(scripts, styles, browsersync, watcher);
+exports.default = parallel(minify, styles, scripts, browsersync, watcher);
