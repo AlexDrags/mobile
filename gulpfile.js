@@ -52,16 +52,40 @@ function styles() {
     .pipe(browser.stream())
 }
 
+function imgcopy() {
+    return src(['source/img/**/*.{jpg,png,svg,webp}'])
+    .pipe(newer('dist/img/'))
+    .pipe(dest('dist/img/'))
+    .pipe(browser.stream())
+}
+
+function cleanbuild() {
+    return del('build/**/*', { force: true })
+}
+
+function buildcopy() {
+    return src([
+        'dist/CSS/**/*.min.css',
+        'dist/scripts/**/*.min.js',
+        'dist/img/**/*',
+        'dist/**/*html'
+    ], { base: 'dist' })
+    .pipe(dest('build'));
+}
+
 function watcher() {
     watch('source/**/*.js', scripts);
     watch('source/styles/**/*.less', styles);
+    watch('source/img/**/*', imgcopy);
     watch('source/*.html').on('change', browser.reload);
 }
 
 exports.browsersync = browsersync;
 exports.scripts = scripts;
 exports.styles = styles;
+exports.imgcopy = imgcopy;
 exports.del = del;
 exports.minify = minify;
+exports.build = series(cleanbuild, styles, scripts, buildcopy)
 
-exports.default = parallel(minify, styles, scripts, browsersync, watcher);
+exports.default = parallel(imgcopy, minify, styles, scripts, browsersync, watcher);
